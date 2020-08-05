@@ -2,32 +2,57 @@ import React from 'react'
 
 import whatsapp from '../../assets/images/icons/whatsapp.svg'
 
+import api from '../../services/api'
+
 import './styles.css'
 
-function TeacherItem() {
+export interface Teacher{
+    name:string,
+    avatar:string,
+    bio:string,
+    cost:number,
+    id:number,
+    subject:string,
+    whatsapp:string
+}
+
+interface TeacherItemProps{
+    teacher: Teacher
+}
+
+
+
+const TeacherItem: React.FC<TeacherItemProps> = ({ teacher }) => {
+
+    function createNewConnection(){
+        api.post('connections', {
+            user_id: teacher.id
+        })
+    }
+
     return (
         <article className="teacher-item">
             <header>
-                <img src="https://s4.anilist.co/file/anilistcdn/user/avatar/large/b147988-gWUxGf6r3qXR.png" alt="Perfil imagem" />
+                <img src={teacher.avatar} alt="Perfil imagem" />
                 <div>
-                    <strong>Nome</strong>
-                    <span>Matéria</span>
+                    <strong>{teacher.name}</strong>
+                    <span>{teacher.subject}</span>
                 </div>
             </header>
             <p>
-                Texto
-                    </p>
+            {teacher.bio}
+            </p>
             <footer>
                 <p>
                     Preço/hora
-                            <strong>
-                        R$20,00
-                            </strong>
+                    <strong>
+                        R${teacher.cost}
+                    </strong>
                 </p>
-                <button type="button">
+                <a onClick={createNewConnection} href={`https://wa.me/${teacher.whatsapp}`} target="_blank">
                     <img src={whatsapp} alt="Whatsapp" />
-                            Entrar em contato
-                        </button>
+                    Entrar em contato
+                </a>
             </footer>
         </article>
     )

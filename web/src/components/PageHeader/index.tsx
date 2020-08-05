@@ -7,7 +7,8 @@ import logo from '../../assets/images/logo.svg'
 import './styles.css'
 
 interface PageHeaderProps{
-    title: string
+    title: string,
+    description?: string
 }
 
 const PageHeader: React.FC<PageHeaderProps> = (props) => {
@@ -15,14 +16,15 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
         <header className="page-header">
                 <div className="top-bar-container">
                     <Link to="/">
-                        <img src={backIcon} alt=""/>
+                        <img src={backIcon} alt="Voltar"/>
                     </Link>
-                        <img src={logo} alt=""/>
+                        <img src={logo} alt="Logo"/>
                 </div>
                 <div className="header-content">
                     <strong>
                         {props.title}
                     </strong>
+                    {props.description && <p>{props.description}</p>}
                     {props.children}
                 </div>
 
